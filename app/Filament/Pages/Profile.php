@@ -21,6 +21,7 @@ class Profile extends Page implements HasForms
     use InteractsWithForms;
     protected static string $view = 'filament.pages.profile';
     protected static bool $shouldRegisterNavigation = false;
+    protected static ?string $title = 'My Profile';
 
     public ?array $profileData = [];
     public ?array $passwordData = [];
