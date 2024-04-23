@@ -66,11 +66,13 @@ class UserResource extends Resource
                             ->autocomplete('new-password')
                                 ->dehydrateStateUsing(fn ($state): string => Hash::make($state))
                                 ->live(debounce: 500)
-                                ->same('passwordConfirmation'),
+                                ->same('passwordConfirmation')
+                                ->revealable(),
                         Forms\Components\TextInput::make('passwordConfirmation')
                                 ->password()
                                 ->required()
-                                ->dehydrated(false),
+                                ->dehydrated(false)
+                                ->revealable(),
                     ])->hiddenOn('edit')
             ]);
     }

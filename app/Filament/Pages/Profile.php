@@ -64,7 +64,8 @@ class Profile extends Page implements HasForms
                     Forms\Components\TextInput::make('Current password')
                         ->password()
                         ->required()
-                        ->currentPassword(),
+                        ->currentPassword()
+                        ->revealable(),
                     Forms\Components\TextInput::make('password')
                         ->password()
                         ->required()
@@ -72,11 +73,13 @@ class Profile extends Page implements HasForms
                         ->autocomplete('new-password')
                         ->dehydrateStateUsing(fn ($state): string => Hash::make($state))
                         ->live(debounce: 500)
-                        ->same('passwordConfirmation'),
+                        ->same('passwordConfirmation')
+                        ->revealable(),
                     Forms\Components\TextInput::make('passwordConfirmation')
                         ->password()
                         ->required()
-                        ->dehydrated(false),
+                        ->dehydrated(false)
+                        ->revealable(),
                 ]),
             ])
             ->model($this->getUser())
