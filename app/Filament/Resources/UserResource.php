@@ -49,7 +49,7 @@ class UserResource extends Resource
                             ->hidden(fn(?User $record) => $record && $record->id === Auth::id()),
                         Forms\Components\TextInput::make('email')
                             ->email()
-                            ->unique(ignorable: fn ($record) => $record)
+                            ->unique(ignoreRecord: true)
                             ->required()
                             ->minLength(4)
                             ->maxLength(255)
@@ -94,7 +94,7 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -105,7 +105,9 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->query(function (User $query) {
+                return $query->whereNot('id', Auth::id());
+            });
     }
 
     public static function getRelations(): array
