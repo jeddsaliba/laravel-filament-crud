@@ -16,7 +16,9 @@ class EditUser extends EditRecord
     {
         return [
             Actions\DeleteAction::make()
-            ->hidden(fn (User $record) => $record->id === Auth::id()),
+                ->hidden(fn (User $record) => $record->id === Auth::id() || $record->deleted_at),
+            Actions\ForceDeleteAction::make(), 
+            Actions\RestoreAction::make(),
         ];
     }
 }
